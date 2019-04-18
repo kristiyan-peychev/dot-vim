@@ -69,12 +69,9 @@ color flattr
 syntax on
 " set number
 filetype plugin on
-let g:clang_user_options='|| exit 0'
-let g:clang_complete_auto = 1
-let g:clang_complete_copen = 0
-let g:clang_library_path = '/usr/lib64/llvm/libclang.so'
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 
-map <C-x> :NERDTreeToggle<CR>
+map <C-x> :bd<CR>
 map <C-z> :TlistToggle<CR>
 map <C-l> :bn<CR>
 map <C-h> :bp<CR>
@@ -88,9 +85,52 @@ map <C-DOWN> <C-W><DOWN>
 map <C-LEFT> <C-W><LEFT>
 map <C-RIGHT> <C-W><RIGHT>
 
+map gr :execute "grep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+let c = 1
+while c <= 99
+  execute "nnoremap " . c . "gb :" . c . "b\<CR>"
+  let c += 1
+endwhile
+
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3']]
+"    \ ['black',       'SeaGreen3'],
+"    \ ['darkmagenta', 'DarkOrchid3'],
+"    \ ['Darkblue',    'firebrick3'],
+"    \ ['darkgreen',   'RoyalBlue3'],
+"    \ ['darkcyan',    'SeaGreen3'],
+"    \ ['darkred',     'DarkOrchid3'],
+"    \ ['red',         'firebrick3'],
+"    \ ]
+
+let g:rbpt_max = 9
+let g:rbpt_loadcmd_toggle = 0
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 let g:cpp_class_scope_highlight = 1
 set scrolloff=9
 set tabstop=2
 set shiftwidth=2
 set expandtab
 set ignorecase
+
+let g:clang_complete_auto=0
+let g:clang_complete_copen=1
+let g:clang_library_path='/usr/lib64'
+let g:clang_use_library=1
+
+
+"python3-devellet g:clang_library_path = '/usr/lib64/llvm/libclang.so'
+"set listchars=eol:¬,tab:>·,trail:·,extends:>,precedes:<,space:~
+"set list
