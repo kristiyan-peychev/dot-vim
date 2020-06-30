@@ -72,10 +72,11 @@ filetype plugin on
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 map <C-x> :bd<CR>
-map <C-z> :TlistToggle<CR>
 map <C-l> :bn<CR>
 map <C-h> :bp<CR>
+map ;t :TagbarToggle<CR>
 map ;s :nohl<CR>
+map ;do :1,$+1diffget<CR>
 inoremap <silent> <C-l> <C-o>:update<C-o>:bn<CR>
 inoremap <silent> <C-l> <C-o>:update<C-o>:bp<CR>
 inoremap <silent> <C-S>          <C-O>:update<CR>
@@ -84,6 +85,7 @@ map <C-UP> <C-W><UP>
 map <C-DOWN> <C-W><DOWN>
 map <C-LEFT> <C-W><LEFT>
 map <C-RIGHT> <C-W><RIGHT>
+noremap  <silent> <C-p>          <C-O>:FZF<CR>
 
 map gr :execute "grep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 let c = 1
@@ -124,13 +126,17 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set ignorecase
+set cursorline
+"set cursorcolumn
 
-let g:clang_complete_auto=0
-let g:clang_complete_copen=1
-let g:clang_library_path='/usr/lib64'
-let g:clang_use_library=1
-
+" tagbar config
+let g:tagbar_sort = 0
+let g:tagbar_show_visibility = 1
+let g:tagbar_autopreview = 0
+let g:tagbar_previewwin_pos = ""
+let g:tagbar_left = 1
 
 "python3-devellet g:clang_library_path = '/usr/lib64/llvm/libclang.so'
 "set listchars=eol:¬,tab:>·,trail:·,extends:>,precedes:<,space:~
+set listchars=eol:¬,tab:>·,trail:·,extends:>,precedes:<
 "set list
