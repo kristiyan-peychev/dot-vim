@@ -69,25 +69,21 @@ filetype plugin on
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 map <C-x> :tabclose<CR>
-map <C-l> :tabnext<CR>
-map <C-h> :tabprevious<CR>
-map <C-c> :tabnew<CR>
-map ;t :TagbarToggle<CR>
-map ;s :nohl<CR>
-map ;do :1,$+1diffget<CR>
+map <silent> <C-l> :tabnext<CR>
+map <silent> <C-h> :tabprevious<CR>
+map <C-q> :TagbarToggle<CR>
+map <C-\> :nohl<CR>
+"map <A-i> :1,$+1diffget<CR>
 "inoremap <silent> <C-l> <C-o>:update<C-o>:bn<CR>
 "inoremap <silent> <C-l> <C-o>:update<C-o>:bp<CR>
 map <C-UP> <C-W><UP>
 map <C-DOWN> <C-W><DOWN>
 map <C-LEFT> <C-W><LEFT>
 map <C-RIGHT> <C-W><RIGHT>
-noremap  <silent> <C-p>          <C-O>:FZF<CR>
+noremap  <silent> <C-p>          :FZF<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap <M-p> "2p
-
-map ;l :set tabstop=8 <bar> :set noexpandtab <bar> :set shiftwidth=8 <bar> :set list<CR>
-map ;z :set tabstop=2 <bar> :set expandtab <bar> :set shiftwidth=2 <bar> :set list<CR>
 
 map gr :execute "grep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 let c = 1
@@ -118,20 +114,24 @@ let g:rbpt_colorpairs = [
 let g:rbpt_max = 9
 let g:rbpt_loadcmd_toggle = 0
 
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+let g:rainbow_conf = {
+    \   'separately': {
+        \       'cmake': 0,
+        \   }
+        \}
+
 let g:cpp_class_scope_highlight = 1
 set scrolloff=9
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set expandtab
 set ignorecase
 set cursorline
 "set cursorcolumn
 "
 let g:gruvbox_contrast_dark = "hard"
+let g:gruvbox_contrast_light = "hard"
 let g:gruvbox_improved_strings=1
 set background=dark
 "color flattr
