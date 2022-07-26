@@ -4,7 +4,6 @@ endif
 
 set nocompatible	" Use Vim defaults (much better!)
 set bs=indent,eol,start		" allow backspacing over everything in insert mode
-"set ai			" always set autoindenting on
 "set backup		" keep a backup file
 set viminfo='20,\"50	" read/write a .viminfo file, don't store more
 			" than 50 lines of registers
@@ -63,6 +62,7 @@ let &guicursor = &guicursor . ",a:blinkon0"
 set autoindent
 set smartindent
 set nu
+set relativenumber
 
 syntax on
 filetype plugin on
@@ -134,6 +134,7 @@ let g:gruvbox_contrast_dark = "hard"
 let g:gruvbox_contrast_light = "hard"
 let g:gruvbox_improved_strings=1
 set background=dark
+"set background=light
 "color flattr
 color gruvbox
 
@@ -145,6 +146,8 @@ let g:tagbar_previewwin_pos = ""
 let g:tagbar_left = 1
 
 set encoding=utf-8
+
+set laststatus=2
 
 "python3-devellet g:clang_library_path = '/usr/lib64/llvm/libclang.so'
 "set listchars=eol:¬,tab:>·,trail:·,extends:>,precedes:<,spac
