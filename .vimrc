@@ -4,11 +4,12 @@ endif
 
 set nocompatible	" Use Vim defaults (much better!)
 set bs=indent,eol,start		" allow backspacing over everything in insert mode
-"set backup		" keep a backup file
+set backup		" keep a backup file
 set viminfo='20,\"50	" read/write a .viminfo file, don't store more
 			" than 50 lines of registers
 set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
+"set ruler		" show the cursor position all the time
+set encoding=utf-8
 
 " Only do this part when compiled with support for autocommands
 if has("autocmd")
@@ -43,13 +44,6 @@ if has("cscope") && filereadable("/usr/bin/cscope")
    set csverb
 endif
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-endif
-
 if &term=="xterm"
      set t_Co=8
      set t_Sb=[4%dm
@@ -63,34 +57,39 @@ set autoindent
 set smartindent
 set nu
 set relativenumber
+set laststatus=2
+set hlsearch
 
 syntax on
 filetype plugin on
-set runtimepath^=~/.vim/bundle/ctrlp.vim
 
+" alt+t to open a new tab
+map <silent> <M-t> :tabnew<CR> 
+
+" ctrl+x to close a tab
 map <C-x> :tabclose<CR>
+
+" ctrl+l to move to the next tab
 map <silent> <C-l> :tabnext<CR>
+
+" ctrl+l to move to the previous tab
 map <silent> <C-h> :tabprevious<CR>
+
+" ctrl+q to toggle tagbar
 map <C-q> :TagbarToggle<CR>
-map <C-\> :nohl<CR>
-"map <A-i> :1,$+1diffget<CR>
-"inoremap <silent> <C-l> <C-o>:update<C-o>:bn<CR>
-"inoremap <silent> <C-l> <C-o>:update<C-o>:bp<CR>
-map <C-UP> <C-W><UP>
-map <C-DOWN> <C-W><DOWN>
-map <C-LEFT> <C-W><LEFT>
-map <C-RIGHT> <C-W><RIGHT>
+
+" alt+\ to hide highlighting(search results)
+map <M-\> :nohl<CR>
+
+" alt+g to ACK the worrd below the cursor
+map <M-g> :Ack! --cpp <cword><CR>
+map <M-h> :Ack! --cpp 
+
+" ctrl+p to open FZF
 noremap  <silent> <C-p>          :FZF<CR>
+
 nnoremap n nzz
 nnoremap N Nzz
-nnoremap <M-p> "2p
-
-map gr :execute "grep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
-let c = 1
-while c <= 99
-  execute "nnoremap " . c . "gb :" . c . "b\<CR>"
-  let c += 1
-endwhile
 
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
@@ -101,15 +100,15 @@ let g:rbpt_colorpairs = [
     \ ['darkred',     'SeaGreen3'],
     \ ['darkmagenta', 'DarkOrchid3'],
     \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3']]
-"    \ ['black',       'SeaGreen3'],
-"    \ ['darkmagenta', 'DarkOrchid3'],
-"    \ ['Darkblue',    'firebrick3'],
-"    \ ['darkgreen',   'RoyalBlue3'],
-"    \ ['darkcyan',    'SeaGreen3'],
-"    \ ['darkred',     'DarkOrchid3'],
-"    \ ['red',         'firebrick3'],
-"    \ ]
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
 
 let g:rbpt_max = 9
 let g:rbpt_loadcmd_toggle = 0
@@ -123,18 +122,34 @@ let g:rainbow_conf = {
 
 let g:cpp_class_scope_highlight = 1
 set scrolloff=9
-set tabstop=4
-set shiftwidth=4
-set expandtab
+set tabstop=8
+set shiftwidth=8
+set noexpandtab
 set ignorecase
 set cursorline
 "set cursorcolumn
-"
+
+"set listchars=eol:¬,tab:>·,trail:·,extends:>,precedes:<,spac
+"set listchars=tab:<->,trail:·,extends:>>,precedes:<<
+set listchars=tab:<->,lead:·,trail:·
+set list
+
+call plug#begin()
+
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'morhetz/gruvbox'
+Plug 'mileszs/ack.vim'
+
+call plug#end()
+
 let g:gruvbox_contrast_dark = "hard"
 let g:gruvbox_contrast_light = "hard"
 let g:gruvbox_improved_strings=1
 set background=dark
-"set background=light
+set background=light
+
 "color flattr
 color gruvbox
 
@@ -145,12 +160,8 @@ let g:tagbar_autopreview = 0
 let g:tagbar_previewwin_pos = ""
 let g:tagbar_left = 1
 
-set encoding=utf-8
+set mouse=
 
-set laststatus=2
-
-"python3-devellet g:clang_library_path = '/usr/lib64/llvm/libclang.so'
-"set listchars=eol:¬,tab:>·,trail:·,extends:>,precedes:<,spac
-"set listchars=tab:<->,trail:·,extends:>>,precedes:<<
-set listchars=tab:<->,lead:·,trail:·
-set list
+lua require'nvim-treesitter.configs'.setup{highlight={enable=true}, punctuation={guifg=None}}
+noremap  <M-w>          :hi @punctuation guifg=None<CR>
+hi @punctuation guifg=None
